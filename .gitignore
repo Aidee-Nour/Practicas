@@ -1,0 +1,7 @@
+# filepath: /workspaces/Practicas/.gitignore
+# Ignorar ficheros comunes
+.vscode/
+*.pyc
+__pycache__/
+node_modules/
+.env
