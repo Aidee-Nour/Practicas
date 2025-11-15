@@ -1,0 +1,47 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+char* leerTexto() {
+    char *buffer = NULL;
+    int size = 0;
+    char linea[256];
+
+    printf("Ingresa el texto (deja una linea vacia para terminar):\n");
+
+    while (1) {
+        fgets(linea, sizeof(linea), stdin);
+
+        // linea vacia o solo Enter
+        if (strcmp(linea, "\n") == 0)
+            break;
+
+        int len = strlen(linea);
+
+        char *nuevo = realloc(buffer, size + len + 1);
+        if (!nuevo) {
+            printf("Error de memoria.\n");
+            free(buffer);
+            return NULL;
+        }
+
+        buffer = nuevo;
+        memcpy(buffer + size, linea, len);
+        size += len;
+        buffer[size] = '\0';
+    }
+
+    return buffer;
+}
+
+int buscarTexto(const char *texto, const char *buscar) {
+    char *pos = strstr(texto, buscar);
+    return pos ? (int)(pos - texto) : -1;
+}
+
+char* reemplazarTexto(const char *texto, const char *buscar, const char *reemplazar) {
+    char *pos = strstr(texto, buscar);
+    if (!pos) {
+        printf("No se encontro el texto a buscar.\n");
+        return NULL;
+    }
